@@ -1,0 +1,137 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5">Editar Producto</h1>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <form
+      action="{% url 'editar_producto' object.id_producto %}"
+      method="post"
+      enctype="multipart/form-data"
+      id="myFormEdit">
+      
+      <div class="modal-body">
+        {% csrf_token %}
+
+        <p>
+          {{ form.descripcion_producto.label_tag }}
+          {{ form.descripcion_producto }}
+          {% if form.descripcion_producto.errors %}
+            {% for error in form.descripcion_producto.errors %}
+              <strong>{{ error }}</strong>
+            {% endfor %}
+          {% endif %}
+        </p>
+
+        <div class="d-flex gap-2">
+          <p class="w-50">
+            {{ form.imagen.label_tag }}
+            <input
+              type="file"
+              name="imagen"
+              class="form-control"
+              accept="image/*"
+              id="id_imagen"
+            />
+            {% if form.imagen.errors %}
+              {% for error in form.imagen.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+          <p class="w-50">
+            {{ form.categoria_FK.label_tag }}
+            {{ form.categoria_FK }}
+            {% if form.categoria_FK.errors %}
+              {% for error in form.categoria_FK.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+        </div>
+
+        <div class="d-flex gap-2">
+          <p class="w-50">
+            {{ form.precio_bruto_producto.label_tag }}
+            {{ form.precio_bruto_producto }}
+            {% if form.precio_bruto_producto.errors %}
+              {% for error in form.precio_bruto_producto.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+          <p class="w-50">
+            {{ form.precio_venta.label_tag }}
+            {{ form.precio_venta }}
+            {% if form.precio_venta.errors %}
+              {% for error in form.precio_venta.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+        </div>
+
+        <div class="d-flex gap-2">
+          <p class="w-50">
+            {{ form.margen_ganancia.label_tag }}
+            {{ form.margen_ganancia }}
+            {% if form.margen_ganancia.errors %}
+              {% for error in form.margen_ganancia.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+
+          <p class="w-50">
+            {{ form.stock.label_tag }}
+            {% if form.tipo_medida.value == "UNIDAD" %}
+              <input type="number" name="stock" value="{{ form.stock.value|floatformat:0 }}" class="form-control" step="any" required="" id="id_stock">
+            {% else %}
+              {{ form.stock }}
+            {% endif %}
+            {% if form.stock.errors %}
+              {% for error in form.stock.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+        </div>
+
+        <div class="d-flex gap-2">
+          <p class="w-50">
+            {{ form.tipo_medida.label_tag }}
+            {{ form.tipo_medida }}
+            {% if form.tipo_medida.errors %}
+              {% for error in form.tipo_medida.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+          <p class="w-50">
+            {{ form.tipo_impuesto.label_tag }}
+            {{ form.tipo_impuesto }}
+            {% if form.tipo_impuesto.errors %}
+              {% for error in form.tipo_impuesto.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="submit" value="Editar Producto" class="btn btn-success">
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

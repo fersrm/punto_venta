@@ -1,0 +1,114 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5">Agregar Usuario</h1>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close">
+      </button>
+    </div>
+    <form
+      action="{% url 'agregar_usuario' %}"
+      method="post"
+      enctype="multipart/form-data"
+      id="myFormUser">
+
+      <div class="modal-body">
+        {% csrf_token %}
+
+        <p>
+          {{ user_form.first_name.label_tag }}
+          {{ user_form.first_name }}
+          {% if user_form.first_name.errors %}
+            {% for error in user_form.first_name.errors %}
+              <strong>{{ error }}</strong>
+            {% endfor %}
+          {% endif %}
+        </p>
+
+        <p>
+          {{ user_form.last_name.label_tag }}
+          {{ user_form.last_name }}
+          {% if user_form.last_name.errors %}
+            {% for error in user_form.last_name.errors %}
+              <strong>{{ error }}</strong>
+            {% endfor %}
+          {% endif %}
+        </p>
+
+        <p>
+          {{ user_form.username.label_tag }}
+          {{ user_form.username }}
+          {% if user_form.username.errors %}
+            {% for error in user_form.username.errors %}
+              <strong>{{ error }}</strong>
+            {% endfor %}
+          {% endif %}
+        </p>
+
+        <p>
+          {{ user_form.email.label_tag }}
+          {{ user_form.email }}
+          {% if user_form.email.errors %}
+            {% for error in user_form.email.errors %}
+              <strong>{{ error }}</strong>
+            {% endfor %}
+          {% endif %}
+        </p>
+
+        <div class="d-flex gap-2">
+          <p class="w-50">
+            {{ profile_form.telefono_user.label_tag }}
+            {{ profile_form.telefono_user }}
+            {% if profile_form.telefono_user.errors %}
+              {% for error in profile_form.telefono_user.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+          <p class="w-50">
+            {{ profile_form.position_FK.label_tag }}
+            {{ profile_form.position_FK }}
+            {% if profile_form.position_FK.errors %}
+              {% for error in profile_form.position_FK.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+        </div>
+
+        <div class="d-flex gap-2">
+          <p class="w-50">
+            {{ user_form.password1.label_tag }}
+            {{ user_form.password1 }}
+            {% if user_form.password1.errors %}
+              {% for error in user_form.password1.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+          <p class="w-50">
+            {{ user_form.password2.label_tag }}
+            {{ user_form.password2 }}
+            {% if user_form.password2.errors %}
+              {% for error in user_form.password2.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="submit" value="Agregar Usuario" class="btn btn-primary">
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

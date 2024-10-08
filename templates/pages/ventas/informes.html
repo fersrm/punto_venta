@@ -1,0 +1,51 @@
+{% extends "components/Layout/base.html" %} 
+{% load static %}
+
+{% block head %}
+
+<h1 class="h2">Informes</h1>
+
+<div class="btn-toolbar mb-2 mb-md-0">
+  <span>{% include 'components/include/buscadorRangoFecha.html' %}</span>
+</div>
+
+{% endblock %} 
+
+{% block content %} 
+
+{% if object_list %}
+
+<div class="overflow-auto" style="max-height: 70vh">
+  <table 
+    class="table table-striped table-sm mt-3" 
+    id="tabla-informe-ventas"
+    style="min-width: 20rem;">
+    <thead>    
+      <tr>
+        <th scope="col">Fecha</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+  {% for fecha, total in object_list.items %}
+    <tr class="align-middle">
+      <td>{{ fecha }}</td>
+      <td>{{ total }}</td>
+    </tr>
+  {% endfor %}
+    </tbody>
+  </table>  
+</div>
+
+<a  href="{% url 'exportar_rango_pdf' %}?buscarFecha1={{ request.GET.buscarFecha1 }}&buscarFecha2={{ request.GET.buscarFecha2 }}" class="btn btn-primary mt-3">Generar PDF</a>
+
+<a href="{% url 'exportar_rango_excel' %}?buscarFecha1={{ request.GET.buscarFecha1 }}&buscarFecha2={{ request.GET.buscarFecha2 }}" class="btn btn-success mt-3">Exportar a Excel</a>
+
+{% else %}
+  <strong>NO HAY REGISTROS</strong>
+{% endif %}
+
+
+{% endblock %}
+
+

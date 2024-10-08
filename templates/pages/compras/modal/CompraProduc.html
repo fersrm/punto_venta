@@ -1,0 +1,98 @@
+{% load static %}
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5">Añadir producto</h1>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <p class="text-center mt-3">{{ object.nombre_producto }}</p>
+    <p class="text-center mt-1">
+      <img
+        src="{% if object.imagen %}{{ object.imagen.url }}{% else %}{% static 'img/producto.png' %}{% endif %}"
+        alt="{{ object.descripcion_producto }}"
+        height="120px"
+        class="imgPlus"
+      />
+    </p>
+    <p class="text-center mb-0">{{ object.descripcion_producto }}</p>
+    <form
+      action="{% url 'añadir_compra' object.id_producto %}"
+      method="post"
+      enctype="multipart/form-data"
+      id="myFormCompra">
+
+      <div class="modal-body">
+        {% csrf_token %}
+
+        <p>
+          {{ form.stock_increment.label_tag }}
+          {{ form.stock_increment }}
+          {% if form.stock_increment.errors %}
+            {% for error in form.stock_increment.errors %}
+              <strong>{{ error }}</strong>
+            {% endfor %}
+          {% endif %}
+        </p>
+
+        <div class="d-flex gap-2">
+          <p class="w-50">
+            {{ form.precio_bruto_producto.label_tag }}
+            {{ form.precio_bruto_producto }}
+            {% if form.precio_bruto_producto.errors %}
+              {% for error in form.precio_bruto_producto.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+          <p class="w-50">
+            {{ form.precio_bruto_old.label_tag }}
+            {{ form.precio_bruto_old }}
+            {% if form.precio_bruto_old.errors %}
+              {% for error in form.precio_bruto_old.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+        </div>
+
+        <div class="d-flex gap-2">
+          <p class="w-50">
+            {{ form.margen_ganancia.label_tag }}
+            {{ form.margen_ganancia }}
+            {% if form.margen_ganancia.errors %}
+              {% for error in form.margen_ganancia.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+          <p class="w-50">
+            {{ form.precio_venta.label_tag }}
+            {{ form.precio_venta }}
+            {% if form.precio_venta.errors %}
+              {% for error in form.precio_venta.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          value="Añadir Producto"
+          class="btn btn-success"
+          id="btnModalCompra">
+          Añadir
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+{% load static %}
+<a
+  class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
+  href="{% url 'Home' %}"
+  >{{ request.datos_empresa.nombre_empresa|default:"CodeTech" }}
+</a>
+<div class="d-flex justify-content-between" style="width: calc(100% - 195px)">
+
+  <div class="profile-content ms-4 d-flex gap-4">
+    <button
+      type="button"
+      class="btn btn-outline-warning d-flex position-relative"
+      data-bs-toggle="modal"
+      data-bs-target="#carritoModal"
+      style="height: 30px">
+      <svg
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-cart-plus"
+        viewBox="0 0 16 16">
+        <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
+        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+      </svg>
+      <span id="cart-count" class="rounded-pill bg-danger rounded-pill carrito_contador" style="font-size: 0.7em;">
+        0
+      </span>
+    </button>
+    {% if user.profile.position_FK.permission_code != "RESTRICTED" %}
+      {% if request.productos_con_stock_bajo %}
+        <button
+          class="btn btn-outline-info d-flex notificacion"
+          onclick="tabla_poco_stock('{% url 'tabla_stock' %}')">
+          <svg  
+            width="16" 
+            height="16" 
+            fill="currentColor" 
+            class="bi bi-boxes" 
+            viewBox="0 0 16 16">
+            <path 
+              d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434L7.752.066ZM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567L4.25 7.504ZM7.5 9.933l-2.75 1.571v3.134l2.75-1.571V9.933Zm1 3.134 2.75 1.571v-3.134L8.5 9.933v3.134Zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567-2.742 1.567Zm2.242-2.433V3.504L8.5 5.076V8.21l2.75-1.572ZM7.5 8.21V5.076L4.75 3.504v3.134L7.5 8.21ZM5.258 2.643 8 4.21l2.742-1.567L8 1.076 5.258 2.643ZM15 9.933l-2.75 1.571v3.134L15 13.067V9.933ZM3.75 14.638v-3.134L1 9.933v3.134l2.75 1.571Z"
+            />
+          </svg>
+        </button>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <div class="d-flex gap-2 me-4">
+    <div class="profile-content" style="color: white;">
+      {{ request.user.profile.position_FK }}
+      <span class="nombre-user">: {{ request.user.first_name }} {{request.user.last_name }}</span>
+    </div>
+    <a href="{% url 'Profile' %}">
+      <img
+        {% if request.user.profile.image %}
+          src="{{ request.user.profile.image.url }}"
+        {% else %} 
+          src="{% static 'img/profile.webp' %}"
+        {% endif %}
+        alt="profileImg"
+        class="rounded-circle icon"
+      />
+    </a>
+  </div>
+</div>
+
+<ul class="navbar-nav flex-row d-md-none">
+  <li class="nav-item text-nowrap">
+    <button
+      class="nav-link px-3 text-white"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#sidebarMenu"
+      aria-controls="sidebarMenu"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <svg class="bi"><use xlink:href="#list" /></svg>
+    </button>
+  </li>
+</ul>

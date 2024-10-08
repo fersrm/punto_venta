@@ -1,0 +1,249 @@
+{% load static %}
+<div
+  class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary position-fixed z-3"
+>
+  <div
+    class="offcanvas-md offcanvas-end bg-body-tertiary"
+    tabindex="-1"
+    id="sidebarMenu"
+    aria-labelledby="sidebarMenuLabel"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="sidebarMenuLabel">{{ request.datos_empresa.nombre_empresa|default:"CodeTech" }}</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="offcanvas"
+        data-bs-target="#sidebarMenu"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div
+      class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto min-vh-100"
+    >
+      <ul class="nav flex-column">
+
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-2 {% if request.path == '/' %}active{% endif %}"
+            aria-current="page"
+            href="{% url 'Home' %}"
+          >
+            <svg class="bi"><use xlink:href="#house-fill" /></svg>
+            Inicio
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-2 {% if request.path == '/tienda/' %}active{% endif %}"
+            href="{% url 'Tienda' %}"
+          >
+            <svg class="bi"><use xlink:href="#cart" /></svg>
+            Productos
+          </a>
+        </li>
+
+        {% if user.profile.position_FK.permission_code != "RESTRICTED" %}
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-2 {% if request.path == '/usuarios/' %}active{% endif %}"
+            href="{% url 'Usuarios' %}"
+          >
+            <svg class="bi"><use xlink:href="#people" /></svg>
+            Usuarios
+          </a>
+        </li>
+        {% endif %}
+
+        {% if user.profile.position_FK.permission_code != "RESTRICTED" %}
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-2 {% if request.path == '/proveedores/' %}active{% endif %}"
+            href="{% url 'Proveedores' %}"
+          >
+            <svg
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-truck"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"
+              />
+            </svg>
+            Proveedores
+          </a>
+        </li>
+        {% endif %}
+
+        {% if user.profile.position_FK.permission_code != "RESTRICTED" %}
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-2 {% if request.path == '/compras/' %}active{% endif %}"
+            href="{% url 'Compras' %}"
+          >
+            <svg
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-box-seam"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"
+              />
+            </svg>
+            Compras
+          </a>
+        </li>
+        {% endif %}
+
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-2 {% if request.path == '/clientes/' %}active{% endif %}"
+            href="{% url 'Clientes' %}"
+          >
+            <svg
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-person-vcard"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5ZM9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8Zm1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5Z"
+              />
+              <path
+                d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2ZM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96c.026-.163.04-.33.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1.006 1.006 0 0 1 1 12V4Z"
+              />
+            </svg>
+            Clientes
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-2 {% if request.path == '/ventas/' %}active{% endif %}"
+            href="{% url 'Ventas' %}"
+          >
+            <svg width="16" height="16" fill="currentColor" class="bi bi-file-medical-fill" viewBox="0 0 16 16">
+              <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8.5 4.5v.634l.549-.317a.5.5 0 1 1 .5.866L9 6l.549.317a.5.5 0 1 1-.5.866L8.5 6.866V7.5a.5.5 0 0 1-1 0v-.634l-.549.317a.5.5 0 1 1-.5-.866L7 6l-.549-.317a.5.5 0 0 1 .5-.866l.549.317V4.5a.5.5 0 1 1 1 0zM5.5 9h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zm0 2h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
+            </svg>
+            Generar Boletas
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-2 {% if request.path == '/facturas/' %}active{% endif %}"
+            href="{% url 'Facturas' %}"
+          >
+            <svg width="16" height="16" fill="currentColor" class="bi bi-file-earmark-medical" viewBox="0 0 16 16">
+              <path d="M7.5 5.5a.5.5 0 0 0-1 0v.634l-.549-.317a.5.5 0 1 0-.5.866L6 7l-.549.317a.5.5 0 1 0 .5.866l.549-.317V8.5a.5.5 0 1 0 1 0v-.634l.549.317a.5.5 0 1 0 .5-.866L8 7l.549-.317a.5.5 0 1 0-.5-.866l-.549.317V5.5zm-2 4.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 2a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+              <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+            </svg>
+            Generar Facturas
+          </a>
+        </li>
+
+        {% if user.profile.position_FK.permission_code != "RESTRICTED" %}
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-2 {% if request.path == '/promociones/' %}active{% endif %}"
+            href="{% url 'Promociones' %}"
+          >
+            <svg width="16" height="16" fill="currentColor" class="bi bi-file-earmark-medical" viewBox="0 0 512 512"><path d="M345 39.1L472.8 168.4c52.4 53 52.4 138.2 0 191.2L360.8 472.9c-9.3 9.4-24.5 9.5-33.9 .2s-9.5-24.5-.2-33.9L438.6 325.9c33.9-34.3 33.9-89.4 0-123.7L310.9 72.9c-9.3-9.4-9.2-24.6 .2-33.9s24.6-9.2 33.9 .2zM0 229.5V80C0 53.5 21.5 32 48 32H197.5c17 0 33.3 6.7 45.3 18.7l168 168c25 25 25 65.5 0 90.5L277.3 442.7c-25 25-65.5 25-90.5 0l-168-168C6.7 262.7 0 246.5 0 229.5zM144 144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg>
+            Promociones
+          </a>
+        </li>
+        {% endif %}  
+
+      </ul>
+
+      <h6
+        class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase"
+      >
+        <span>Reportes</span>
+      </h6>
+
+      {% if user.profile.position_FK.permission_code != "RESTRICTED" %}
+      <ul class="nav flex-column mb-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-2 {% if request.path == '/ventas/informes/' %}active{% endif %}"
+            href="{% url 'Informes' %}"
+          >
+            <svg class="bi">
+              <use xlink:href="#file-earmark-text" />
+            </svg>
+            Informes Ventas
+          </a>
+        </li>
+      </ul>
+      {% endif %}
+
+      <hr class="my-3" />
+      <ul class="nav flex-column mb-auto">
+
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-2 {% if request.path == '/usuarios/cambio_clave/' %}active{% endif %}"
+            href="{% url 'CambioPass' %}">
+            <svg 
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 448 512">
+              <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z"/>
+            </svg>
+            Cambiar Contraseña
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-2 {% if request.path == '/usuarios/perfil/' %}active{% endif %}"
+            href="{% url 'Profile' %}">
+            <svg
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-person-bounding-box"
+              viewBox="0 0 16 16">
+              <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z"/>
+              <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+            </svg>
+            Perfil
+          </a>
+        </li>
+
+        {% if user.profile.position_FK.permission_code != "RESTRICTED" %}
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-2 {% if request.path == '/setting/' %}active{% endif %}"
+            href="{% url 'Setting' %}"
+          >
+            <svg class="bi">
+              <use xlink:href="#gear-wide-connected" />
+            </svg>
+            Configuraciones
+          </a>
+        </li>
+        {% endif %}
+
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-2"
+            href="{% url 'salir' %}"
+          >
+            <svg class="bi"><use xlink:href="#door-closed" /></svg>
+            Cerrar Sesión
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</div>

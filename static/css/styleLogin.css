@@ -1,0 +1,212 @@
+:root{
+    --color1:#ffffff;
+    --borde2:#ffffff80;
+    --bordes:#ffffff33;
+    --sombra:#0000001a;
+    --formulario: #332c3342;
+    --letras:#00000098;
+    --botom:#9a74c8;;
+   /*---------------- colores de fondo ------------------ */
+    --color5:#de9bec;
+    /*Colores gradiente*/
+    --graColor1:#9d45f7;
+    --graColor2:#9d45f777;
+    /*Colores gradiente circulo*/
+    --graColorCir1:#6b00ff;
+    --graColorCir2:#dc12b9;
+    --graColorCir3:#4c0979;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+body{
+    overflow: hidden;
+}
+section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background:radial-gradient(circle, var(--graColorCir2) 0%,var(--graColorCir3)  64%, var(--graColorCir1) 100%);/*bordes*/
+}
+section .color{
+    position: absolute;
+    filter: blur(100px);
+}
+section .color{
+    width:100%;
+    height: 100%;
+    background-color: var(--color5);/*centro*/
+    opacity: 0.9;
+    background-image: 
+        
+        linear-gradient(30deg, var(--graColor1) 12%, transparent 12.5%, transparent 87%,  var(--graColor1) 87.5%,  var(--graColor1) ), /* costados mas oscuros*/
+        linear-gradient(150deg,  var(--graColor1)  12%, transparent 12.5%, transparent 87%,  var(--graColor1)  87.5%,  var(--graColor1)),/* costados*/
+        linear-gradient(60deg,  var(--graColor2) 25%, transparent 25.5%, transparent 75%,  var(--graColor2) 75%,  var(--graColor2) ),/*lados*/
+        linear-gradient(60deg,  var(--graColor2)  25%, transparent 25.5%, transparent 75%,  var(--graColor2)  75%,  var(--graColor2) );/*container*/
+}
+.box{
+    position: relative;
+}
+.box .square{
+    position: absolute;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px var(--sombra);
+    border: 1px solid var(--borde2);
+    border-right: 1px solid var(--bordes);
+    border-bottom: 1px solid var(--bordes);
+    border-radius: 10px;
+    animation: animate 10s linear infinite;
+    animation-delay: calc(-1s * var(--i));
+}
+@keyframes  animate{
+    0%,100%
+    {
+        transform: translateY(-40px);
+    }   
+    50%
+    {
+        transform: translateY(40px);
+    }
+}
+.box .square:nth-child(1){
+    top: -50px;
+    right: -60px;
+    width: 100px;
+    height: 100px;
+}
+.box .square:nth-child(2){
+    top: 150px;
+    left: -100px;
+    width: 120px;
+    height: 120px;
+    z-index: 2;
+}
+.box .square:nth-child(3){
+    bottom: 50px;
+    right: -60px;
+    width: 80px;
+    height: 80px;
+    z-index: 2;
+}
+.box .square:nth-child(4){
+    bottom: -80px;
+    left: 100px;
+    width: 50px;
+    height: 50px;
+}
+.box .square:nth-child(5){
+    top: -80px;
+    left: 100px;
+    width: 60px;
+    height: 60px;
+}
+.container{
+    position: relative;
+    width: 370px;
+    min-height: 400px;
+    background: var(--formulario);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px var(--sombra);
+    border: 1px solid var(--borde2);
+    border-right: 1px solid var(--bordes);
+    border-bottom: 1px solid var(--bordes);
+}
+.form{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+
+}
+.form h2{
+    position: relative;
+    color:var(--color1);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+}
+.form h2::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 80px;
+    height: 4px;
+    background: var(--color1);
+}
+form{
+    text-align: center;
+}
+.form .inputBox{
+    width: 100%;
+    margin-top: 20px;
+    position: relative;
+}
+.form .inputBox input{
+    width: 100%;
+    background: var(--bordes);
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 35px;
+    border: 1px solid var(--borde2);
+    border-right: 1px solid var(--bordes);
+    border-bottom: 1px solid var(--bordes);
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: var(--letras);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    margin-top: 50px;
+}
+.form .inputBox input:focus + .form__label,
+.form .inputBox input:not(:placeholder-shown) + .form__label{
+    transform: translateY(-19px) scale(.9);
+    transform-origin: left top;
+    color: var(--letras);
+}
+.form__label{
+    color: var(--borde2);
+    cursor: pointer;
+    position: absolute;
+    top:50px;
+    left: 15px;
+    transform: translatey(10px);
+    transition: transform .5s,color .3s;
+}
+.form .inputBox input[type="submit"]{
+    background: var(--botom);
+    color: var(--letras);
+    max-width: 200px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-weight: 600;
+    margin-top: 10px;
+    border: none;
+}
+.form .inputBox input[type="submit"]:hover{
+    background: var(--color1);
+}
+@media screen and (max-width: 500px){
+    section
+    {
+        overflow-x: hidden;
+    }
+    .box .square
+    {
+        display: none;
+    }
+    .container
+    {
+      width: 100%; 
+    }
+}

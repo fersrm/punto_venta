@@ -1,0 +1,188 @@
+.buscador {
+  width: 15.6rem;
+}
+
+.imgEdit {
+  max-width: 18.75rem;
+}
+
+.icon {
+  max-width: 1.9rem;
+}
+
+.card {
+  max-width: 18rem;
+}
+
+table {
+  min-width: 53.75rem;
+}
+
+table img {
+  max-width: 8.13rem !important;
+  border-radius: 0.25rem;
+}
+
+.alignCenter {
+  padding-top: 1.6rem !important;
+}
+
+.alignCenterBtn {
+  padding-top: 19px !important;
+}
+
+.contenedorCard-setting {
+  grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr));
+}
+
+.cardEmpresa,
+.cardUser,
+.cardUserClave,
+.cardCategoria {
+  width: 100%;
+  max-width: 30rem;
+  margin-bottom: 1rem;
+}
+
+.cardEmpresa img,
+.cardUser img {
+  max-width: 8.44rem;
+}
+
+.btn-fecha {
+  margin-top: 0.7rem !important;
+}
+
+form p {
+  margin-bottom: 1rem;
+}
+
+form p label {
+  margin-bottom: 0.5rem;
+}
+
+td button {
+  height: 2.35rem;
+}
+
+.imgPlus {
+  border-radius: 0.25rem;
+}
+
+.tabla-modal {
+  width: 68.75rem;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.tableCarrito {
+  min-width: 16.25rem;
+}
+
+.tableCarrito .td {
+  padding: 0.875rem;
+}
+
+.none {
+  display: none !important;
+}
+
+.notificacion {
+  height: 1.875rem;
+}
+
+.grid-card {
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+
+/* COMPRAS */
+.formCompras {
+  flex: 1;
+  min-width: 200px;
+}
+
+.tablaCompra .conTabla {
+  width: 73%;
+}
+.tablaCompra table {
+  min-width: 500px !important;
+}
+.tablaCompra form {
+  width: 27%;
+}
+
+.total {
+  outline: solid 2px #ffffff !important;
+  font-size: 1.2rem !important;
+}
+
+.sidebar .nav-link.active {
+  background: #00e5ff1a;
+}
+
+@media screen and (max-width: 1000px) {
+  .tablaCompra {
+    flex-direction: column;
+  }
+  .tablaCompra .conTabla {
+    width: 100%;
+  }
+  .tablaCompra form {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    margin-top: 0 !important;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .nombre-user {
+    display: none;
+  }
+  .card {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .profile-content {
+    display: none;
+  }
+
+  .buscador {
+    width: 100%;
+    display: flex;
+    order: 1;
+  }
+
+  .tableCarrito thead {
+    font-size: 14px;
+  }
+
+  .tableCarrito tbody {
+    font-size: 12px;
+  }
+
+  .btn-carrito {
+    flex-direction: column;
+  }
+}
+
+strong {
+  display: block;
+  background-color: rgb(235, 168, 168);
+  border-radius: 0.375rem;
+  border: 1px solid rgb(111, 47, 47);
+  padding: 12px;
+  margin: 10px 0;
+  color: rgb(111, 47, 47);
+}
+
+.carrito_contador {
+  padding: 4px 8px;
+  position: absolute;
+  top: 15px;
+  left: 29px;
+  color: #ffffff;
+  display: none;
+}

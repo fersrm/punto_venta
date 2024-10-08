@@ -1,0 +1,27 @@
+{% if messages %}
+  {% if messages|length > 1 %}
+    <div id="error-messages" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <div class="d-flex">
+        <div>
+          {% with excel_errors=messages|length %}
+            {% with adjusted_errors=excel_errors|add:"-1" %}
+              {% if adjusted_errors == 1 %}
+                <h4 class="alert-heading">Hubo {{ adjusted_errors }} error con tu envío.</h4>
+              {% elif adjusted_errors > 1 %}
+                <h4 class="alert-heading">Hubo {{ adjusted_errors }} errores con tu envío.</h4>
+              {% endif %}
+            {% endwith %}
+          {% endwith %}
+          <ul class="mt-2 mb-0">
+            {% for message in messages %}
+              {% if 'excel_error' in message.extra_tags %}
+                <li>{{ message }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endif %}
+{% endif %}

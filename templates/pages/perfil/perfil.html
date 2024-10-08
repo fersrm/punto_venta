@@ -1,0 +1,48 @@
+{% extends "components/Layout/base.html" %} 
+{% load static %} 
+
+{% block head %}
+
+<h1 class="h2">Editar Perfil</h1>
+<div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true"></div>
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="d-flex justify-content-center contenedorCard-setting">
+  <div class="card cardUser">
+    <img
+      {% if request.user.profile.image %}
+        src="{{ request.user.profile.image.url }}"
+      {% else %} 
+        src="{% static 'img/profile.webp' %}"
+      {% endif %}
+      class="card-img-top m-auto mt-3 rounded-circle"
+      alt="icono-empresa"
+    />
+    <div class="card-body">
+      <h5 class="card-title">Datos del Usuario:</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">{{ user.profile.position_FK.permission_code }}</li>
+    </ul>
+    <div class="card-footer">
+      <form method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+          {% csrf_token %}
+          {{ user_form.as_p }}
+          {{ profile_form.as_p }}
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          name="submit_form_contacto">
+          Guardar Datos del Usuario
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

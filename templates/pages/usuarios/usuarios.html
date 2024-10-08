@@ -1,0 +1,95 @@
+{% extends "components/Layout/base.html" %} 
+{% load static %} 
+
+{% block head %}
+
+<h1 class="h2">Usuarios</h1>
+{% include 'components/include/buscador.html' %}
+<div class="btn-toolbar mb-2 mb-md-0">
+  <button
+    type="button"
+    class="btn btn-primary"
+    onclick="abrir_modal_add_user('{% url 'agregar_usuario' %}')">
+    Agregar
+  </button>
+</div>
+
+{% endblock %} 
+
+{% block content %} 
+
+{% if object_list %}
+
+<div class="overflow-x-auto">
+  <table class="table table-striped table-hover mt-4">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Usuario</th>
+        <th>Teléfono</th>
+        <th>Email</th>
+        <th>Cargo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for usuario in object_list %}
+      <tr class="align-middle">
+        <td>{{ usuario.first_name }}</td>
+        <td>{{ usuario.last_name }}</td>
+        <td>{{ usuario.username }}</td>
+        <td>{{ usuario.profile.telefono_user }}</td>
+        <td>{{ usuario.email }}</td>
+        <td>{{ usuario.profile.position_FK.user_position }}</td>
+        <td>
+          {% if not usuario.is_superuser %}
+          <div class="d-flex gap-2">
+            <button
+              class="btn btn-outline-success d-flex"
+              onclick="abrir_modal_edit_user('{% url 'editar_usuario' usuario.id %}')">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            <button
+              class="btn btn-outline-danger d-flex"
+              onclick="eliminar_usuario({{ usuario.id }}, '{{ usuario.username }}')">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </div>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% include 'components/include/paginador.html' %}
+
+<div
+  class="modal fade"
+  id="editModalUser"
+  tabindex="-1"
+  aria-hidden="true"
+></div>
+
+{% else %}
+
+<strong>NO HAY REGISTROS</strong>
+
+{% endif %}
+
+<div
+  class="modal fade"
+  id="addModalUser"
+  tabindex="-1"
+  aria-hidden="true"
+></div>
+
+{%endblock %} 
+
+{% block script %}
+
+<script defer src="{% static 'js/autoFocus.js' %}"></script>
+
+{% endblock %}

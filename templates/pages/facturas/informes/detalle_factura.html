@@ -1,0 +1,47 @@
+{% extends "components/Layout/base.html" %} 
+{% load static %} 
+
+{% block head %}
+
+  <h1 class="h2">Detalle de la Factura #{{ factura.id_factura }}</h1>
+  <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true"></div>
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="card mb-5" style="max-width: 25rem;">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Total: {{ factura.total_factura }}</li>
+    <li class="list-group-item">Descuento Total: {{ factura.total_descuento }}</li>
+    <li class="list-group-item">Vendedor: {{ factura.venta_FK.usuario_FK }}</li>
+    <li class="list-group-item">Fecha de Emisión: {{ factura.venta_FK.fecha_emision.date }}</li>
+  </ul>
+</div>
+
+  <h3>Productos en esta Factura</h3>
+
+  <div class="table-responsive small mt-3">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Cantidad</th>
+                <th>Producto</th>
+                <th>Precio Unitario</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detalle in detalle_facturas %}
+            <tr class="align-middle">
+                <td>{{ detalle.cantidad }}</td>
+                <td>{{ detalle.producto_nombre }}</td>
+                <td>{{ detalle.producto_precio }}</td>
+                <td>{{ detalle.total }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+
+{% endblock %}

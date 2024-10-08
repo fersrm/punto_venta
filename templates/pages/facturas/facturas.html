@@ -1,0 +1,243 @@
+{% extends "components/Layout/base.html" %} 
+{% load static %}
+
+{% block head %}
+
+<h1 class="h2 me-4">Venta Factura</h1>
+{% include 'components/include/buscador.html' %}
+
+{% endblock %} 
+
+{% block content %}
+
+<!-- -------------------------------------------------------- -->
+<div class="d-flex align-items-center gap-3">
+  <form class="input-group buscador mt-4" method="GET">
+    <input
+      type="text"
+      class="form-control"
+      name="buscar_cliente"
+      placeholder="Buscador"
+      value="{{ request.GET.buscar_cliente}}"
+      id="buscar_cliente"/>
+    <button type="submit" class="btn btn-outline-secondary">
+      <i class="bi bi-search"></i>
+    </button>
+  </form>
+  
+  <button
+      type="button"
+      class="btn btn-primary mt-4"
+      onclick="abrir_modal_add_client('{% url 'agregar_cliente' %}')">
+      Añadir 
+      <svg width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+      </svg>
+  </button>
+</div>
+
+
+<div
+  class="modal fade"
+  id="addModalClient"
+  tabindex="-1"
+  aria-hidden="true">
+</div>
+
+<!-- -------------------------------------------------------- -->
+
+<div class="overflow-auto">
+  <table class="table table-striped table-hover mt-4" style="min-width: 38rem !important">
+    <thead>
+      <tr>
+        <th>RUN</th>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Teléfono</th>
+      </tr>
+    </thead>
+    <tbody id="datos_cliente">
+      {% if request.GET.buscar_cliente and object_list %}
+      <tr class="align-middle">
+        <td>{{ cliente.run_cliente }}</td>
+        <td>{{ cliente.nombre_cliente }} {{ cliente.apellido_cliente }}</td>
+        <td>{{ cliente.correo_cliente }}</td>
+        <td>{{ cliente.telefono_cliente }}</td>
+      </tr>
+      {% else %}
+        <tr class="align-middle"><td colspan="4">INGRESE AL CLIENTE</td></tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
+<!-- ---------------------------------------------------------------- -->
+
+<div class="d-flex gap-4 tablaCompra"> 
+  <div class="overflow-auto conTabla">
+    <table class="table table-striped table-hover mt-4" id="table-venta" style="min-width: 38rem !important">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Descripción</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Total</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <form class="mt-4">
+    <p>
+      <label for="subtotal">Subtotal</label>
+      <input
+        type="number"
+        name="subtotal"
+        class="form-control"
+        id="subtotal"
+        readonly="readonly"/>
+    </p>
+    <p>
+      <label for="impuestos">Impuesto</label>
+      <input
+        type="number"
+        name="impuestos"
+        class="form-control"
+        id="impuestos"
+        readonly="readonly"/>
+    </p>
+    <p>
+      <label for="descuento">Descuento</label>
+      <input
+        type="number"
+        name="descuento"
+        class="form-control"
+        id="descuento"
+        readonly="readonly"
+        style="color: red;"/>
+    </p>
+    <p>
+      <label for="total">
+        <span style="font-weight: 700;">Total</span> 
+      </label>
+      <input
+        type="number"
+        name="total"
+        class="form-control total"
+        id ="total"
+        readonly="readonly"/>
+    </p>
+  </form>
+</div>
+
+<div id="containerBtnVentas" class="mt-1 d-flex none">
+  <button class="btn btn-danger me-3" id="btnLimpiarVenta">
+    Eliminar Venta
+  </button>
+
+  <form
+    action="{% url 'Facturas' %}"
+    method="post"
+    enctype="multipart/form-data"
+    id="formDatosVenta">
+    {% csrf_token %}
+    {{ form.cliente_id }}
+    {% if form.cliente_id.errors %}
+      {% for error in form.cliente_id.errors %}
+        <strong>{{ error }}</strong>
+      {% endfor %}
+    {% endif %}
+
+    {{ form.carrito }}
+    {% if form.carrito.errors %}
+      {% for error in form.carrito.errors %}
+        <strong>{{ error }}</strong>
+      {% endfor %}
+    {% endif %}
+    <button type="button" class="btn btn-primary" id="btnSumitVenta">
+      Generar Venta
+    </button>
+  </form>
+</div>
+
+
+
+<!-- TERMINAR DE REVISAR ---->
+{% if request.GET.buscar_cliente and object_list %}
+
+  <script>
+    // para el input hidden cliente_Fk
+    const clienteID = document.getElementById("id_cliente");
+    clienteID.value =  {{ cliente.id_cliente }};
+  </script>
+        
+{% elif request.GET.buscar and object_list %}
+  {% if object_list.tipo_medida == "UNIDAD" %}
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        agregarAlCarrito(
+          {{ object_list.id_producto }},
+          '{{ object_list.codigo_producto }}',
+          '{{ object_list.descripcion_producto }}',
+          '{{ object_list.stock }}',
+          {{ object_list.precio_venta }},
+          '{{ object_list.tipo_medida }}',
+          '{{ object_list.tipo_impuesto }}',
+          {{ object_list.descuento }}
+        );
+
+      });
+    </script>
+
+  {% else %}
+
+    <button
+      type="button"
+      id="abrirCantidadModal"
+      class="visually-hidden"
+      data-bs-toggle="modal"
+      data-bs-target="#cantidadModal">
+      <i class="bi bi-cart-plus"></i>
+    </button>
+
+    {% include 'components/modal/modalCantidad.html' %}
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const abrirModal = document.getElementById("abrirCantidadModal");
+
+        datosProducto(
+          {{ object_list.id_producto }},
+          '{{ object_list.codigo_producto }}',
+          '{{ object_list.descripcion_producto }}',
+          '{{ object_list.stock }}',
+          {{ object_list.precio_venta }},
+          '{{ object_list.tipo_medida }}',
+          '{{ object_list.tipo_impuesto }}',
+          {{ object_list.descuento }}
+        );
+
+        abrirModal.click();
+
+      });
+    </script>
+
+  {% endif %}
+{% endif %}
+
+{% for message in messages %}
+  {% if "success-factura" in message.tags %}
+    <script defer src="{% static 'js/factura.js' %}"></script>
+  {% endif %}
+{% endfor %}
+
+{% endblock %} 
+
+{% block script %}
+  <script defer src="{% static 'js/ventas.js' %}"></script>
+  <script defer src="{% static 'js/submitVentas.js' %}"></script>
+  <script defer src="{% static 'js/autoFocus.js' %}"></script>
+{% endblock %}

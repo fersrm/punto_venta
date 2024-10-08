@@ -1,0 +1,70 @@
+<!-- MODAL COMPRAS Y LOCALSTORAGE -->
+<script>
+  $(document).ready(function() {
+    function abrir_modal_compras(url) {
+      $("#ComprasModal").load(url, function () {
+        $(this).modal("show");
+        const formId = "myFormCompra"
+        const productCantidadInput = document.querySelector(`#${formId} [name='stock_increment']`);
+        const productPrecioInput = document.querySelector(`#${formId} [name='precio_bruto_producto']`);
+        inicializarModal(formId);
+        const btnModalCompra = document.querySelector(`#${formId} #btnModalCompra`);
+
+        // Cargar los productos almacenados en localStorage
+        let productList = JSON.parse(localStorage.getItem("productoDataList")) || [];
+
+        // Función para calcular el importe
+        function calculateImporte(dataCantidad, dataPrecioBruto) {
+          const cantidad = parseFloat(dataCantidad);
+          const precioBruto = parseFloat(dataPrecioBruto);
+
+          if (!isNaN(cantidad) && !isNaN(precioBruto)) {
+            return cantidad * precioBruto;
+          }
+            return 0;
+          }
+
+        // Evento en btn del modal crea data y submit
+        btnModalCompra.addEventListener('click',function(){
+          if(productCantidadInput && productCantidadInput.value > 0 ){
+
+            const data = {
+                cantidad: productCantidadInput.value,
+                precioBruto: productPrecioInput.value,
+                importe: calculateImporte(productCantidadInput.value,productPrecioInput.value),
+                descripcion: "{{producto.descripcion_producto}}",
+                codigo: "{{producto.codigo_producto}}"
+              };
+
+            updateLocalStorage(data);
+
+          }
+          document.getElementById(`${formId}`).submit();
+        });
+
+        // Función para actualizar el objeto y el localStorage
+        function updateLocalStorage(data) {
+
+          const productIndex = productList.findIndex(item => item.codigo === data.codigo);
+          if (productIndex !== -1) {
+            productList[productIndex] = data;
+          }else{
+            productList.push(data);
+          }
+
+          localStorage.setItem("productoDataList", JSON.stringify(productList));
+        }
+
+    });
+    }
+
+    abrir_modal_compras('{% url 'añadir_compra' producto.id_producto %}');
+
+
+    // LIMPIA URL DE BUSQUEDA AL CERRAR EL MODAL
+    $('#ComprasModal').on('hidden.bs.modal', function () {
+      history.replaceState({}, document.title, window.location.pathname);
+    });
+
+  });
+</script>

@@ -1,0 +1,255 @@
+{% extends "components/Layout/base.html" %} 
+{% load static %}
+{% load humanize %}
+
+{% block script %}
+
+  {% if user.profile.position_FK.permission_code != "RESTRICTED" %}
+    <script defer>
+      const ventas_diarias = {{ ventas_diarias|safe }};
+      const gastos_totales = {{ compras_totales|safe }};
+    </script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"
+      integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG"
+      crossorigin="anonymous">
+    </script>
+    <script defer src="{% static 'js/dashboard.js' %}"></script>
+  {% endif %}
+
+{% endblock %}
+
+{% block head %}
+  <h1 class="h2">Panel de Inicio</h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <span>{% load tz %} </span>
+    <span>{{ mi_fecha }}</span>
+  </div>
+{% endblock %} 
+
+{% block content %}
+
+{% if user.profile.position_FK.permission_code != "RESTRICTED" %}
+
+<div class="d-grid grid-card gap-2">
+
+  <div class="card border-secondary mb-3">
+    <div class="card-header">Facturas</div>
+    <div class="card-body text-secondary">
+      <h5 class="card-title">Reporte Diario</h5>
+      <p class="d-flex justify-content-between">
+        ${{ total_factura|default:"0" }}
+        <span>
+          <svg class="bi">
+            <use xlink:href="#file-earmark-text" />
+          </svg>
+          {{ cantidad_factura }}
+        </span>
+      </p>
+      <a class="btn btn-primary" href="{% url 'Informe_facturas' %}">Ver informe</a>
+    </div>
+  </div>
+
+  <div class="card border-secondary mb-3">
+    <div class="card-header">Boletas</div>
+    <div class="card-body text-secondary">
+      <h5 class="card-title">Reporte Diario</h5>
+      <p class="d-flex justify-content-between">
+        ${{ total_boleta|default:"0" }}
+        <span>
+          <svg class="bi">
+            <use xlink:href="#file-earmark-text" />
+          </svg>
+          {{ cantidad_boletas }}
+        </span>
+      </p>
+      <a class="btn btn-primary" href="{% url 'Boletas' %}">Ver informe</a>
+    </div>
+  </div>
+  <div class="card border-secondary mb-3">
+    <div class="card-header">Gráfico</div>
+    <div class="card-body text-secondary">
+      <form method="GET">
+        <div class="form-group">
+          <label for="periodo">Selecciona el periodo:</label>
+          <select class="form-select"  name="periodo">
+            <option value="dia" {% if request.GET.periodo == 'dia' %}selected{% endif %}>Diario</option>
+            <option value="semana" {% if request.GET.periodo == 'semana' %}selected{% endif %}>Semanal</option>
+            <option value="mes" {% if request.GET.periodo == 'mes' %}selected{% endif %}>Mensual</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-fecha">
+          Mostrar ventas
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<canvas class="my-4 w-100" id="myChart" width="900" height="280"></canvas>
+
+{% endif %}
+
+<h2>Top productos más vendidos</h2>
+{% if user.profile.position_FK.permission_code != "RESTRICTED" %}
+  <div class="d-flex justify-content-end">
+    <a href="{% url 'export_top_mas_vendidos_excel' %}" class="btn btn-success mb-2">Descargar en Excel</a>
+  </div>
+{% endif %}
+<div class="table-responsive small mt-3">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Nombre de producto</th>
+        <th>Categoria</th>
+        <th>Stock</th>
+        <th>Precio</th>
+        <th>Cantidad vendida</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if top_mas_vendidos %}
+        {% for producto in top_mas_vendidos %}
+        <tr class="align-middle">
+          <td>{{ producto.producto_FK__codigo_producto }}</td>
+          <td>{{ producto.producto_FK__descripcion_producto }}</td>
+          <td>{{ producto.producto_FK__categoria_FK__nombre_categoria }}</td>
+          <td >{{ producto.producto_FK__stock|floatformat:0 }}</td>
+          <td>${{ producto.producto_FK__precio_venta}}</td>
+          <td>{{ producto.total_vendido }}</td>
+        </tr>
+        {% endfor %}
+      {% else %}
+      <tr>
+        <td colspan="6">NO HAY REGISTROS</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
+<h2 class="mt-4">Top productos menos vendidos</h2>
+{% if user.profile.position_FK.permission_code != "RESTRICTED" %}
+  <div class="d-flex justify-content-end">
+    <a href="{% url 'export_top_menos_vendidos_excel' %}" class="btn btn-success mb-2">Descargar en Excel</a>
+  </div>
+{% endif %}
+<div class="table-responsive small mt-3">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th>Codigo</th>
+        <th>Nombre de producto</th>
+        <th>Categoria</th>
+        <th>Stock</th>
+        <th>Precio</th>
+        <th>Cantidad Vendida</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if top_menos_vendidos %}
+        {% for producto in top_menos_vendidos %}
+        <tr class="align-middle">
+          <td>
+              {% if producto.codigo_producto %}
+                {{ producto.codigo_producto }}
+              {% else %}
+                {{ producto.producto_FK__codigo_producto }}
+              {% endif %}
+          </td>
+          <td>
+              {% if producto.descripcion_producto %}
+                {{ producto.descripcion_producto }}
+              {% else %}
+                {{ producto.producto_FK__descripcion_producto }}
+              {% endif %}
+          </td>
+          <td>
+              {% if producto.categoria_FK__nombre_categoria %}
+                {{ producto.categoria_FK__nombre_categoria }}
+              {% else %}
+                {{ producto.producto_FK__categoria_FK__nombre_categoria }}
+              {% endif %}
+          </td>
+          <td>
+              {% if producto.stock %}
+                {{ producto.stock|floatformat:0 }}
+              {% else %}
+                {{ producto.producto_FK__stock|floatformat:0 }}
+              {% endif %}
+          </td>
+          <td>$
+              {% if producto.precio_venta %}
+                {{ producto.precio_venta}}
+              {% else %}
+                {{ producto.producto_FK__precio_venta }}
+              {% endif %}
+          </td>
+          <td>{{ producto.total_vendido|default:"0" }}</td>
+        </tr>
+        {% endfor %}
+      {% else %}
+      <tr>
+        <td colspan="6">NO HAY REGISTROS</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
+
+<h2 class="mt-4">Ultima conexion Usuarios</h2>
+<div class="table-responsive small mt-3">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Correo</th>
+        <th>Cargo</th>
+        <th>Ultima conexion</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if object_list %}
+        {% for user in object_list %}
+          <tr class="align-middle">
+            <td style="padding: 10px 0;">
+              <div class="d-flex align-items-center">
+                <div class="position-relative">
+                  <img 
+                    src="{% if user.profile.image %}{{ user.profile.image.url }}{% else %}{% static 'img/profile.webp' %}{% endif %}" 
+                    alt="perfil"
+                    class="rounded-circle"
+                    style="width: 35px; height: 35px;"
+                  />
+                  {% if user.id in active_users %}
+                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle"></span>
+                  {% endif %}
+                </div>
+                <div class="ms-2">{{ user.username }}</div>
+              </div>
+            </td>
+
+            <td style="padding: 10px 0;">{{ user.email }}</td>
+
+            <td style="padding: 10px 0;">
+                {{ user.profile.position_FK.user_position }}
+            </td>
+
+            <td style="padding: 10px 0;">
+              {% if user.id in active_users %}
+                <div class="text-success">Activo</div>
+              {% else %}
+                {{ user.profile.last_activity|naturaltime }}
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %} 

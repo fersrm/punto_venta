@@ -1,0 +1,51 @@
+{% extends "components/Layout/base.html" %} 
+{% load static %} 
+
+{% block head %}
+
+<h1 class="h2">Editar Perfil</h1>
+<div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true"></div>
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="d-flex justify-content-center contenedorCard-setting">
+  <div class="card cardUserClave mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Cambiar Contraseña:</h5>
+    </div>
+    <div class="card-footer">
+      <form method="post">
+        <div class="mb-3">
+          {% csrf_token %} 
+          {{ form_pass.non_field_errors }}
+          <p>
+            {{ form_pass.new_password1.label_tag }}
+            {{ form_pass.new_password1 }}
+            {% if form_pass.new_password1.errors %}
+              {% for error in form_pass.new_password1.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+
+          <p>
+            {{ form_pass.new_password2.label_tag }}
+            {{ form_pass.new_password2 }}
+            {% if form_pass.new_password2.errors %}
+              {% for error in form_pass.new_password2.errors %}
+                <strong>{{ error }}</strong>
+              {% endfor %}
+            {% endif %}
+          </p>
+        </div>
+        <button type="submit" class="btn btn-primary" name="submit_form_pass">
+          Guardar Contraseña
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

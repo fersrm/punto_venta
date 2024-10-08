@@ -1,0 +1,26 @@
+{% if messages %}
+  {% for message in messages %}
+<script>
+  var icon = "success";
+  var titleText = "Felicidades";
+  var confirbtn = false;
+  var tiempo = 2000;
+
+  if ("{{ message.tags }}".includes("error")) {
+
+    icon = 'error';
+    titleText = "Error";
+    confirbtn = true;
+    tiempo = 10000
+
+  }
+  Swal.fire({
+      titleText,
+      text: "{{ message }}",
+      icon,
+      showConfirmButton: confirbtn,
+      timer: tiempo,
+  })
+</script>
+    {% endfor %}
+{% endif %}

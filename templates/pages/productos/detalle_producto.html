@@ -1,0 +1,30 @@
+{% extends "components/Layout/base.html" %} 
+{% load static %} 
+
+{% block head %}
+  <h1 class="h2">Detalle de Producto {{ producto.codigo_producto }}</h1>
+  <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true"></div>
+{% endblock %} 
+
+{% block content %}
+  <div class="card mb-5 d-flex flex-column flex-lg-row overflow-hidden" style="max-width:50rem;">
+    <img
+      class="img-fluid mx-auto d-block"
+      src="{% if producto.imagen %}{{ producto.imagen.url }}{% else %}{% static 'img/producto.png' %}{% endif %}"
+      alt="{{producto.nombre_producto}}"
+      style="max-width: 25rem;"/>
+    <ul class="list-group list-group-flush w-100">
+      <li class="list-group-item">Nombre Producto: {{ producto.descripcion_producto }}</li>
+      <li class="list-group-item">Precio: {{ producto.precio_venta }}</li>
+      <li class="list-group-item">Margen Ganancia: {{ producto.margen_ganancia }}%</li>
+      <li class="list-group-item">Stock:
+        {% if producto.tipo_medida == "UNIDAD" %} 
+          {{ producto.stock|floatformat:0 }}
+        {% else %}
+          {{ producto.stock|floatformat:2 }}Kg
+        {%endif%}
+      </li>
+      <li class="list-group-item">Tipo de Medida: {{ producto.tipo_medida }}</li>
+    </ul>
+  </div>
+{% endblock %}

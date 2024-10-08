@@ -1,0 +1,202 @@
+[
+  {
+    "codigo_producto": "pan",
+    "descripcion_producto": "Pan",
+    "categoria_FK": 1,
+    "precio_bruto_producto": 1500,
+    "precio_venta": 2000,
+    "stock": 10,
+    "tipo_medida": "KILO",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "5449000006271",
+    "descripcion_producto": "Bebida Fanta 1.45 lt.",
+    "categoria_FK": 2,
+    "precio_bruto_producto": 600,
+    "precio_venta": 1000,
+    "stock": 7,
+    "tipo_medida": "UNIDAD",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "4060800100252",
+    "descripcion_producto": "Bebida de Fantasía Pepsicola, 3lt",
+    "categoria_FK": 2,
+    "precio_bruto_producto": 900,
+    "precio_venta": 2000,
+    "stock": 5,
+    "tipo_medida": "UNIDAD",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "54490970",
+    "descripcion_producto": "Bebida Sprite 1,45 lt.",
+    "categoria_FK": 2,
+    "precio_bruto_producto": 600,
+    "precio_venta": 1000,
+    "stock": 10,
+    "tipo_medida": "UNIDAD",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "5449000000996",
+    "descripcion_producto": "Bebida Coca-Cola Original 1.5 L",
+    "categoria_FK": 2,
+    "precio_bruto_producto": 800,
+    "precio_venta": 1500,
+    "stock": 10,
+    "tipo_medida": "UNIDAD",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "8437013764001",
+    "descripcion_producto": "Aceite Vegetal 100% Canola Belmont, 1lt",
+    "categoria_FK": 1,
+    "precio_bruto_producto": 700,
+    "precio_venta": 2100,
+    "stock": 7,
+    "tipo_medida": "UNIDAD",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "7898147940593",
+    "descripcion_producto": "Ketchup Hellmann's, 500g",
+    "categoria_FK": 3,
+    "precio_bruto_producto": 800,
+    "precio_venta": 2000,
+    "stock": 5,
+    "tipo_medida": "UNIDAD",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "8414533043847",
+    "descripcion_producto": "Mayonesa Hellmann's, 900g",
+    "categoria_FK": 3,
+    "precio_bruto_producto": 700,
+    "precio_venta": 1900,
+    "stock": 5,
+    "tipo_medida": "UNIDAD",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "9788492808274",
+    "descripcion_producto": "Lentejas 6 Mm Bonanza, 1kg",
+    "categoria_FK": 1,
+    "precio_bruto_producto": 400,
+    "precio_venta": 1300,
+    "stock": 6,
+    "tipo_medida": "UNIDAD",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "5901234123457",
+    "descripcion_producto": "Porotos Blancos Grado 1 Iansa Agro, 1kg",
+    "categoria_FK": 1,
+    "precio_bruto_producto": 600,
+    "precio_venta": 1700,
+    "stock": 5,
+    "tipo_medida": "UNIDAD",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "8421691601253",
+    "descripcion_producto": "Garbanzos Con Piel Lider, 1kg",
+    "categoria_FK": 1,
+    "precio_bruto_producto": 400,
+    "precio_venta": 1200,
+    "stock": 5,
+    "tipo_medida": "UNIDAD",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "123456789012",
+    "descripcion_producto": "Sal Yodada Fina Lobos, 1kg",
+    "categoria_FK": 3,
+    "precio_bruto_producto": 350,
+    "precio_venta": 700,
+    "stock": 7,
+    "tipo_medida": "UNIDAD",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "40181700982",
+    "descripcion_producto": "Comino Molido Gourmet, 100g",
+    "categoria_FK": 3,
+    "precio_bruto_producto": 700,
+    "precio_venta": 1200,
+    "stock": 5,
+    "tipo_medida": "UNIDAD",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "0900188595701",
+    "descripcion_producto": "Orégano Entero Gourmet, 50g",
+    "categoria_FK": 3,
+    "precio_bruto_producto": 400,
+    "precio_venta": 900,
+    "stock": 8,
+    "tipo_medida": "UNIDAD",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "392387498347242",
+    "descripcion_producto": "Pimienta Negra Molida Gourmet, 15g",
+    "categoria_FK": 3,
+    "precio_bruto_producto": 350,
+    "precio_venta": 700,
+    "stock": 7,
+    "tipo_medida": "UNIDAD",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "zanahoria",
+    "descripcion_producto": "Zanahoria",
+    "categoria_FK": 4,
+    "precio_bruto_producto": 400,
+    "precio_venta": 1000,
+    "stock": 10,
+    "tipo_medida": "KILO",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "paltas",
+    "descripcion_producto": "Paltas",
+    "categoria_FK": 4,
+    "precio_bruto_producto": 500,
+    "precio_venta": 1100,
+    "stock": 15,
+    "tipo_medida": "KILO",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "zapallo",
+    "descripcion_producto": "Zapallo",
+    "categoria_FK": 4,
+    "precio_bruto_producto": 400,
+    "precio_venta": 800,
+    "stock": 5,
+    "tipo_medida": "KILO",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "papas",
+    "descripcion_producto": "Papas",
+    "categoria_FK": 4,
+    "precio_bruto_producto": 500,
+    "precio_venta": 1000,
+    "stock": 17,
+    "tipo_medida": "KILO",
+    "tipo_impuesto": "IVA"
+  },
+  {
+    "codigo_producto": "tomates",
+    "descripcion_producto": "Tomates",
+    "categoria_FK": 4,
+    "precio_bruto_producto": 400,
+    "precio_venta": 1000,
+    "stock": 12,
+    "tipo_medida": "KILO",
+    "tipo_impuesto": "IVA"
+  }
+]

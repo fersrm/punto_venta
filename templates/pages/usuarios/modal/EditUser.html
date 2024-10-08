@@ -1,0 +1,38 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5">Editar Usuario</h1>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close">
+      </button>
+    </div>
+    <form
+      action="{% url 'editar_usuario' object.id %}"
+      method="post"
+      enctype="multipart/form-data"
+      id="myFormEditUser">
+      <div class="modal-body">
+        {% csrf_token %} 
+        {{ usuario_form.as_p }}
+        {{ profile_form.telefono_user.label_tag }}
+        {{ profile_form.telefono_user }}
+        {% if profile_form.telefono_user.errors %}
+          {% for error in profile_form.telefono_user.errors %}
+            <strong>{{ error }}</strong>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="submit" value="Editar Usuario" class="btn btn-success">
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

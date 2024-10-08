@@ -1,0 +1,29 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h1 class="modal-title fs-5">Agregar Productos</h1>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <form id="uploadForm" action="{% url 'carga_excel' %}"  class="p-3" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="id_document" class="fs-4 text">Carga Documento</label>
+      <input 
+        id="id_document" 
+        name="document" 
+        type="file" 
+        class="form-control mt-4 mb-2" 
+        accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+      <p>Excel hasta 30MB</p>
+      <button 
+        id="uploadButton"
+        name="action" 
+        type="submit" 
+        class="btn btn-primary">
+        Subir Documento
+      </button>
+    </form>
+
+  </div>
+</div>
