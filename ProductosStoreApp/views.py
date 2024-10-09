@@ -281,7 +281,6 @@ class CargaProductosExcelView(LoginRequiredMixin, PermitsPositionMixin, FormView
                 descripcion_producto=adapter.get_nombre_producto(),
                 precio_bruto_producto=adapter.get_precio_proveedor(),
                 precio_venta=adapter.get_precio_venta(),
-                margen_ganancia=adapter.get_margen_ganancia(),
                 stock=adapter.get_stock(),
                 tipo_medida=adapter.get_tipo_medida(),
                 tipo_impuesto=adapter.get_tipo_impuesto(),
